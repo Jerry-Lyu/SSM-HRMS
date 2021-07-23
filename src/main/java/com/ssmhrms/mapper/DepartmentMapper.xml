@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="com.ssmhrms.mapper.DepartmentMapper">
+
+    <delete id="deleteDeptById" parameterType="int">
+        delete from ssmhrms.tbl_dept where dept_id=#{deptId};
+    </delete>
+
+    <update id="updateDeptById" parameterType="Department">
+        update ssmhrms.tbl_dept set dept_name=#{deptName},dept_leader=#{deptLeader} where dept_id=#{deptId};
+    </update>
+
+    <insert id="insertDept" parameterType="Department">
+        insert into ssmhrms.tbl_dept(dept_id, dept_name, dept_leader)
+        values (#{deptId},#{deptName},#{deptLeader});
+    </insert>
+
+    <select id="queryDeptById" parameterType="int" resultType="Department">
+        select * from ssmhrms.tbl_dept where dept_id=#{deptId};
+    </select>
+
+    <select id="queryDeptByName" resultType="Department">
+        select * from ssmhrms.tbl_dept where dept_name=#{deptName};
+    </select>
+
+    <select id="queryAllDept" resultType="Department">
+        select * from ssmhrms.tbl_dept;
+    </select>
+
+    <select id="countDept">
+        select count(*) from ssmhrms.tbl_dept;
+    </select>
+
+</mapper>

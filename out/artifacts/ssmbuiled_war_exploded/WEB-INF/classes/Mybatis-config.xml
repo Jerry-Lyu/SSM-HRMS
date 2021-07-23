@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--configuration核心配置文件-->
+<configuration>
+
+    <!--标准的日志工厂实现-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--是否开启自动驼峰命名规则，映射-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--配置数据源，交给Spring做-->
+
+    <typeAliases>
+        <package name="com.ssmhrms.pojo"/>
+    </typeAliases>
+
+    <mappers>
+        <package name="com.ssmhrms.mapper"/>
+    </mappers>
+
+</configuration>

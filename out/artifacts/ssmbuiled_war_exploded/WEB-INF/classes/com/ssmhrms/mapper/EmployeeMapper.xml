@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssmhrms.mapper.EmployeeMapper">
+
+    <delete id="deleteEmpById" parameterType="int">
+        delete
+        from ssmhrms.tbl_emp
+        where emp_id = #{empId};
+    </delete>
+
+    <update id="updateEmpById" parameterType="Employee">
+        update ssmhrms.tbl_emp
+        set emp_name=#{empName},
+            emp_email=#{empEmail},
+            gender=#{gender},
+            dept_id=#{deptId}
+        where emp_id = #{empId};
+    </update>
+
+    <insert id="insertEmp" parameterType="Employee">
+        insert into ssmhrms.tbl_emp(emp_name, emp_email, gender, dept_id)
+        values (#{empName}, #{empEmail}, #{gender}, #{deptId});
+    </insert>
+
+    <select id="queryEmpById" parameterType="int" resultType="Employee">
+        select *
+        from ssmhrms.tbl_emp
+        where emp_id = #{empId};
+    </select>
+
+    <select id="queryEmpByName" resultType="Employee">
+        select *
+        from ssmhrms.tbl_emp
+        where emp_name = #{empName};
+    </select>
+
+    <select id="queryEmpByIdWithDep" resultType="Employee">
+        SELECT emp.emp_id, emp.emp_name, emp.emp_email, emp.gender, dept.dept_name
+        FROM ssmhrms.tbl_emp emp
+                 JOIN ssmhrms.tbl_dept dept ON emp.emp_id = dept.dept_id where emp.emp_id=#{empId};
+    </select>
+
+    <select id="queryAllEmp" parameterType="map" resultMap="EmpDept">
+       select * from ssmhrms.tbl_emp emp join ssmhrms.tbl_dept dept on emp.emp_id=dept.dept_id limit #{offset},#{limit};;
+    </select>
+    <resultMap id="EmpDept" type="Employee">
+        <result property="empId" column="emp_id"/>
+        <result property="empName" column="emp_name"/>
+        <result property="empEmail" column="emp_email"/>
+        <result property="gender" column="gender"/>
+        <association property="department" javaType="Department">
+            <result property="deptId" column="dept_id"/>
+            <result property="deptName" column="dept_name"/>
+            <result property="deptLeader" column="dept_leader"/>
+        </association>
+    </resultMap>
+
+
+    <select id="countEmp" resultType="int">
+        select count(*) from ssmhrms.tbl_emp;
+    </select>
+</mapper>
